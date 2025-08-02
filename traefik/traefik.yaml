@@ -1,0 +1,38 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  debug: true
+  insecure: false
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+
+serversTransport:
+  insecureSkipVerify: true # разрешить самоподписанные сертификаты
+
+providers:
+  file:
+    filename: config.yaml
+    watch: true
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: acc.saime.d@gmail.com
+      storage: acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - 1.1.1.1:53
+          - 1.0.0.1:53

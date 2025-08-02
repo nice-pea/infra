@@ -1,0 +1,16 @@
+[Unit]
+Description=Visualize metrics, logs, and traces
+
+[Container]
+ContainerName=grafana
+Image=grafana/grafana:11.6.0
+Network=proxy
+Volume=grafana.volume:/var/lib/grafana
+Environment=GF_SECURITY_ADMIN_USER=
+Environment=GF_SECURITY_ADMIN_PASSWORD=
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

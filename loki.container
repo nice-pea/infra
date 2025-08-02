@@ -1,0 +1,16 @@
+[Unit]
+Description=Loki by focusing on logs, and delivering logs via push
+
+[Container]
+ContainerName=loki
+Exec='-config.file=/config.yaml'
+Image=docker.io/grafana/loki:3.4.3
+Network=proxy
+Volume=./loki/config.yaml:/config.yaml:ro
+Volume=loki.volume:/loki
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,86 @@
+http:
+  routers: # ========================= ROUTERS =========================
+    traefik:
+      entryPoints:
+        - web
+        - websecure
+      rule: Host(`traefik.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
+        - traefik-auth
+        - sslheader
+      tls:
+        certResolver: cloudflare
+        domains:
+          - main: "dsaime.ru"
+            sans:
+              - "*.dsaime.ru"
+      service: api@internal
+
+    grafana:
+      entryPoints:
+        - web
+        - websecure
+      rule: Host(`grafana.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
+      tls: true
+      service: grafana
+
+    3xui:
+      entryPoints:
+        - web
+        - websecure
+      rule: Host(`3xui.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
+      tls: true
+      service: 3xui
+
+    loki:
+      entryPoints:
+        - web
+        - websecure
+      rule: Host(`loki.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
+        - loki-auth
+      tls: true
+      service: loki
+
+
+  services: # ========================= SERVICES =========================
+    grafana:
+      loadBalancer:
+        servers:
+          - url: http://grafana:3000
+
+    3xui:
+      loadBalancer:
+        servers:
+          - url: http://3x-ui:2053
+    loki:
+      loadBalancer:
+        servers:
+          - url: http://loki:3100
+
+
+  middlewares: # ========================= MIDDLEWARES =========================
+    traefik-auth:
+      basicAuth:
+        users:
+          # - "username:password" # echo $(htpasswd -nb username password) | openssl base64
+
+    sslheader:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    base-https-redirect:
+      redirectScheme:
+        scheme: https
+
+    loki-auth:
+      basicAuth:
+        users:
+          # - "username:password" # echo $(htpasswd -nb username password) | openssl base64

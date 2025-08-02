@@ -1,0 +1,66 @@
+networks:
+  proxy:
+    external: true
+
+volumes:
+  prometheus_volume:
+  loki_volume:
+  grafana_volume:
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v3.3.5
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./traefik/acme.json:/acme.json
+      - ./traefik/traefik.yaml:/traefik.yaml:ro
+      - ./traefik/config.yaml:/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Required for Docker provider
+    environment:
+      - CF_API_EMAIL=${CF_API_EMAIL}
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v3.3.0
+    command:
+      - '--config.file=/config.yaml'
+      - '--storage.tsdb.retention.time=20d'
+      - '--storage.tsdb.retention.size=5GB'
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - ./prometheus/config.yaml:/config.yaml:ro
+      - prometheus_volume:/prometheus
+    ports:
+      - "9090:9090"  # Expose Prometheus web UI
+
+  loki:
+    container_name: loki
+    image: grafana/loki:3.4.3
+    command: -config.file=/config.yaml
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - ./loki/config.yaml:/config.yaml:ro
+      - loki_volume:/loki
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.6.0
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - grafana_volume:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}

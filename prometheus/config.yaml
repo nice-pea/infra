@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s  # By default, scrape targets every 15 seconds.
+
+scrape_configs:
+  # - job_name: 'prometheus'
+  #   static_configs:
+  #     - targets: ['localhost:9090']
+
+  - job_name: 'node_exporter'
+    # metrics_path: /metrics
+    static_configs:
+      # - targets: ['localhost:9560']
+      # - targets: ['acc.saime.d.fvds.ru:9560']
+      - targets: ['host.containers.internal:9560']
+
+
+  # - job_name: 'npc'
+  #   static_configs:
+  #     - targets: ['npc:55478']
+
+  # - job_name: 'tg-contest-bot'
+  #   static_configs:
+  #     - targets: ['85.193.91.49:55478']
