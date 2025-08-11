@@ -8,6 +8,6 @@ services:
      - .env
     ports:
       - "8089:80" # http://127.0.0.1:8089/
-    environment:
+    # environment:
       # PGADMIN_DEFAULT_EMAIL: "admin@dsaime.ru"
       # PGADMIN_DEFAULT_PASSWORD: "password"
