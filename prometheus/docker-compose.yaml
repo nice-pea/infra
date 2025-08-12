@@ -13,7 +13,7 @@ services:
       - '--config.file=/config.yaml'
       - '--storage.tsdb.retention.time=20d'
       - '--storage.tsdb.retention.size=5GB'
-    restart: always
+    restart: on-failure:5
     networks:
       - proxy
     volumes:

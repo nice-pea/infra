@@ -10,7 +10,7 @@ services:
     container_name: loki
     image: grafana/loki:3.4.3
     command: -config.file=/config.yaml
-    restart: always
+    restart: on-failure:5
     networks:
       - proxy
     volumes:
