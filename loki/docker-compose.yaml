@@ -1,0 +1,18 @@
+networks:
+  proxy:
+    external: true
+
+volumes:
+  loki_volume:
+
+services:
+  loki:
+    container_name: loki
+    image: grafana/loki:3.4.3
+    command: -config.file=/config.yaml
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - ./config.yaml:/config.yaml:ro
+      - loki_volume:/loki

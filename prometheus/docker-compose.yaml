@@ -4,10 +4,8 @@ networks:
 
 volumes:
   prometheus_volume:
-  loki_volume:
 
 services:
-
   prometheus:
     container_name: prometheus
     image: prom/prometheus:v3.3.0
@@ -19,18 +17,7 @@ services:
     networks:
       - proxy
     volumes:
-      - ./prometheus/config.yaml:/config.yaml:ro
+      - ./config.yaml:/config.yaml:ro
       - prometheus_volume:/prometheus
     ports:
       - "9090:9090"  # Expose Prometheus web UI
-
-  loki:
-    container_name: loki
-    image: grafana/loki:3.4.3
-    command: -config.file=/config.yaml
-    restart: always
-    networks:
-      - proxy
-    volumes:
-      - ./loki/config.yaml:/config.yaml:ro
-      - loki_volume:/loki
