@@ -5,26 +5,8 @@ networks:
 volumes:
   prometheus_volume:
   loki_volume:
-  grafana_volume:
 
 services:
-  traefik:
-    container_name: traefik
-    image: traefik:v3.3.5
-    restart: always
-    networks:
-      - proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./traefik/acme.json:/acme.json
-      - ./traefik/traefik.yaml:/traefik.yaml:ro
-      - ./traefik/config.yaml:/config.yaml:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro  # Required for Docker provider
-    environment:
-      - CF_API_EMAIL=${CF_API_EMAIL}
-      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
 
   prometheus:
     container_name: prometheus
@@ -52,15 +34,3 @@ services:
     volumes:
       - ./loki/config.yaml:/config.yaml:ro
       - loki_volume:/loki
-
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:11.6.0
-    restart: always
-    networks:
-      - proxy
-    volumes:
-      - grafana_volume:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}

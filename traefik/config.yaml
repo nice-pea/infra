@@ -68,7 +68,7 @@ http:
   middlewares: # ========================= MIDDLEWARES =========================
     traefik-auth:
       basicAuth:
-        usersFile: "/auth/traefik" # https://doc.traefik.io/traefik/middlewares/http/basicauth/
+        usersFile: /auth/traefik # https://doc.traefik.io/traefik/middlewares/http/basicauth/
        
     sslheader:
       headers:
@@ -81,4 +81,4 @@ http:
 
     loki-auth:
       basicAuth:
-        usersFile: "/auth/loki"
+        usersFile: /auth/loki

@@ -1,0 +1,21 @@
+networks:
+  proxy:
+    external: true
+
+volumes:
+  grafana_volume:
+
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.6.0
+    env_file:
+      - .env
+    restart: on-failure:5
+    networks:
+      - proxy
+    volumes:
+      - grafana_volume:/var/lib/grafana
+    # environment:
+    #   - GF_SECURITY_ADMIN_USER=
+    #   - GF_SECURITY_ADMIN_PASSWORD=
