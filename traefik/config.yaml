@@ -2,19 +2,12 @@ http:
   routers: # ========================= ROUTERS =========================
     traefik:
       entryPoints:
-        - web
         - websecure
       rule: Host(`traefik.dsaime.ru`)
       middlewares:
-        - base-https-redirect
         - traefik-auth
-        - sslheader
       tls:
         certResolver: cloudflare
-        domains:
-          - main: "dsaime.ru"
-            sans:
-              - "*.dsaime.ru"
       service: api@internal
 
     grafana:
@@ -103,15 +96,6 @@ http:
     traefik-auth:
       basicAuth:
         usersFile: /auth/traefik # https://doc.traefik.io/traefik/middlewares/http/basicauth/
-       
-    sslheader:
-      headers:
-        customRequestHeaders:
-          X-Forwarded-Proto: https
-
-    base-https-redirect:
-      redirectScheme:
-        scheme: https
 
     loki-auth:
       basicAuth:
