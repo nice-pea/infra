@@ -87,12 +87,12 @@ http:
     adminer:
       loadBalancer:
         servers:
-          - url: http://adminer:8088
+          - url: http://adminer:8080
 
     pgadmin:
       loadBalancer:
         servers:
-          - url: http://pgadmin:8089
+          - url: http://pgadmin:80
 
 
   middlewares: # ========================= MIDDLEWARES =========================
