@@ -19,33 +19,28 @@ http:
 
     grafana:
       entryPoints:
-        - web
         - websecure
       rule: Host(`grafana.dsaime.ru`)
-      middlewares:
-        - base-https-redirect
-      tls: true
+      tls:
+        certResolver: cloudflare
       service: grafana
 
     3xui:
       entryPoints:
-        - web
         - websecure
       rule: Host(`3xui.dsaime.ru`)
-      middlewares:
-        - base-https-redirect
-      tls: true
+      tls:
+        certResolver: cloudflare
       service: 3xui
 
     loki:
       entryPoints:
-        - web
         - websecure
       rule: Host(`loki.dsaime.ru`)
       middlewares:
-        - base-https-redirect
         - loki-auth
-      tls: true
+      tls:
+        certResolver: cloudflare
       service: loki
 
     adminer:
@@ -53,29 +48,24 @@ http:
         - web
         - websecure
       rule: Host(`adminer.dsaime.ru`)
-      middlewares:
-        - base-https-redirect
-      tls: true
+      tls:
+        certResolver: cloudflare
       service: adminer
 
     pgadmin:
       entryPoints:
-        - web
         - websecure
       rule: Host(`pgadmin.dsaime.ru`)
-      middlewares:
-        - base-https-redirect
-      tls: true
+      tls:
+        certResolver: cloudflare
       service: pgadmin
 
     npchat-api:
       entryPoints:
-        - web
         - websecure
       rule: Host(`api.npchat.dsaime.ru`)
-      middlewares:
-        - base-https-redirect
-      tls: true
+      tls:
+        certResolver: cloudflare
       service: npchat-api
 
 
