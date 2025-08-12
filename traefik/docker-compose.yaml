@@ -14,7 +14,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "21525:8080"
     volumes:
       - ./acme.json:/acme.json
       - ./traefik.yaml:/traefik.yaml:ro
