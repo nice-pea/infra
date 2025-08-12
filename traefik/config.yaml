@@ -45,7 +45,6 @@ http:
 
     adminer:
       entryPoints:
-        - web
         - websecure
       rule: Host(`adminer.dsaime.ru`)
       tls:
