@@ -48,6 +48,26 @@ http:
       tls: true
       service: loki
 
+    adminer:
+      entryPoints:
+        - web
+        - websecure
+      rule: Host(`adminer.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
+      tls: true
+      service: adminer
+
+    pgadmin:
+      entryPoints:
+        - web
+        - websecure
+      rule: Host(`pgadmin.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
+      tls: true
+      service: pgadmin
+
 
   services: # ========================= SERVICES =========================
     grafana:
@@ -63,6 +83,16 @@ http:
       loadBalancer:
         servers:
           - url: http://loki:3100
+
+    adminer:
+      loadBalancer:
+        servers:
+          - url: http://adminer:8088
+
+    pgadmin:
+      loadBalancer:
+        servers:
+          - url: http://pgadmin:8089
 
 
   middlewares: # ========================= MIDDLEWARES =========================
