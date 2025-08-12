@@ -57,7 +57,7 @@ http:
         - base-https-redirect
       tls: true
       service: adminer
-
+      service: loki
     pgadmin:
       entryPoints:
         - web
@@ -67,6 +67,13 @@ http:
         - base-https-redirect
       tls: true
       service: pgadmin
+
+    npchat-api:
+      entryPoints:
+        - websecure
+      rule: Host(`api.npchat.dsaime.ru`)
+      tls: true
+      service: npchat-api
 
 
   services: # ========================= SERVICES =========================
@@ -93,6 +100,11 @@ http:
       loadBalancer:
         servers:
           - url: http://pgadmin:80
+
+    npchat-api:
+      loadBalancer:
+        servers:
+          - url: http://npc.npchat:8080
 
 
   middlewares: # ========================= MIDDLEWARES =========================
