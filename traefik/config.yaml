@@ -56,8 +56,8 @@ http:
       middlewares:
         - base-https-redirect
       tls: true
-      service: adminers
-      
+      service: adminer
+
     pgadmin:
       entryPoints:
         - web
