@@ -68,9 +68,8 @@ http:
   middlewares: # ========================= MIDDLEWARES =========================
     traefik-auth:
       basicAuth:
-        users:
-          # - "username:password" # echo $(htpasswd -nb username password) | openssl base64
-
+        usersFile: "/auth/traefik" # https://doc.traefik.io/traefik/middlewares/http/basicauth/
+       
     sslheader:
       headers:
         customRequestHeaders:
@@ -82,5 +81,4 @@ http:
 
     loki-auth:
       basicAuth:
-        users:
-          # - "username:password" # echo $(htpasswd -nb username password) | openssl base64
+        usersFile: "/auth/loki"
