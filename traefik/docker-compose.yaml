@@ -6,6 +6,8 @@ services:
   traefik:
     container_name: traefik
     image: traefik:v3.3.5
+    env_file:
+      - .env
     restart: on-failure:5
     networks:
       - proxy
