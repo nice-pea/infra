@@ -70,8 +70,11 @@ http:
 
     npchat-api:
       entryPoints:
+        - web
         - websecure
       rule: Host(`api.npchat.dsaime.ru`)
+      middlewares:
+        - base-https-redirect
       tls: true
       service: npchat-api
 
