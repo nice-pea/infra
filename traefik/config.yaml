@@ -18,14 +18,6 @@ http:
         certResolver: cloudflare
       service: grafana
 
-    3xui:
-      entryPoints:
-        - websecure
-      rule: Host(`3xui.dsaime.ru`)
-      tls:
-        certResolver: cloudflare
-      service: 3xui
-
     loki:
       entryPoints:
         - websecure
@@ -75,10 +67,6 @@ http:
         servers:
           - url: http://grafana:3000
 
-    3xui:
-      loadBalancer:
-        servers:
-          - url: http://3x-ui:2053
     loki:
       loadBalancer:
         servers:
@@ -102,7 +90,7 @@ http:
     caddy-proxy:
       loadBalancer:
         servers:
-          - url: "http://caddy:80"
+          - url: http://caddy:80
 
 
   middlewares: # ========================= MIDDLEWARES =========================
