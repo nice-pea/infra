@@ -61,10 +61,13 @@ http:
       service: npchat-api
 
     fallback:
-      rule: "PathPrefix(`/`)"
-      priority: 1  # Самый низкий приоритет
+      entryPoints:
+        - websecure
+      rule: HostRegexp(`.*`)
+      tls:
+        certResolver: cloudflare
       service: caddy-proxy
-
+      priority: 0 # Самый низкий приоритет
 
   services: # ========================= SERVICES =========================
     grafana:
