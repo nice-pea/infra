@@ -60,6 +60,11 @@ http:
         certResolver: cloudflare
       service: npchat-api
 
+    fallback:
+      rule: "PathPrefix(`/`)"
+      priority: 1  # Самый низкий приоритет
+      service: caddy-proxy
+
 
   services: # ========================= SERVICES =========================
     grafana:
@@ -90,6 +95,11 @@ http:
       loadBalancer:
         servers:
           - url: http://npc.npchat:8080
+
+    caddy-proxy:
+      loadBalancer:
+        servers:
+          - url: "http://caddy:80"
 
 
   middlewares: # ========================= MIDDLEWARES =========================
