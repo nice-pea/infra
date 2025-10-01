@@ -14,4 +14,4 @@ services:
     networks:
       npc.network:
     depends_on:
-      - npc.loki
+      - loki
