@@ -1,18 +1,21 @@
 networks:
   proxy:
     external: true
+  npc.network:
+    external: true
 
 volumes:
   loki_volume:
 
 services:
   loki:
-    container_name: loki
+    container_name: npc.loki
     image: grafana/loki:3.4.3
     command: -config.file=/config.yaml
     restart: on-failure:5
     networks:
-      - proxy
+      proxy:
+      npc.network:
     volumes:
       - ./config.yaml:/config.yaml:ro
       - loki_volume:/loki

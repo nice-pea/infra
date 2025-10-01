@@ -1,0 +1,17 @@
+networks:
+  proxy:
+    external: true
+  npc.network:
+    external: true
+
+services:
+  vector:
+    image: timberio/vector:0.50.0-alpine
+    container_name: npc.vector
+    volumes:
+      - ./vector.yaml:/etc/vector/vector.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      npc.network:
+    depends_on:
+      - npc.loki
