@@ -6,7 +6,7 @@ networks:
 services:
   npc.npchat:
     container_name: npc.npchat
-    image: npchat:${IMAGE_TAG}
+    image: ${IMAGE_NAME}:${IMAGE_TAG}
     restart: on-failure:3
     networks:
       npc.network:
