@@ -1,0 +1,31 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  npc.infrabot:
+    container_name: npc.infrabot
+    image: ${IMAGE_NAME}:${IMAGE_TAG}
+    env_file:
+      - .env
+    restart: on-failure:3
+    networks:
+      proxy:
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.0:8080/ping" ]
+      interval: 3s
+      timeout: 1s
+      retries: 5
+    expose:
+      - 8080
+    command:
+      - "--tgtoken"
+      - "${TG_TOKEN}"
+      - "--port"
+      - "8080"
+      - "--chat-id"
+      - "${CHAT_ID}"
+      - "--topic"
+      - "${TOPIC}"
+      - "--gh-secret"
+      - "${GH_SECRET}"

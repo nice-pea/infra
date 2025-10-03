@@ -52,6 +52,14 @@ http:
         certResolver: cloudflare
       service: npchat-api
 
+    infrabot:
+      entryPoints:
+        - websecure
+      rule: Host(`infrabot.npchat.dsaime.ru`)
+      tls:
+        certResolver: cloudflare
+      service: infrabot
+
     fallback:
       entryPoints:
         - websecure
@@ -86,6 +94,11 @@ http:
       loadBalancer:
         servers:
           - url: http://npc.npchat:8080
+
+    infrabot:
+      loadBalancer:
+        servers:
+          - url: http://npc.infrabot:8080
 
     caddy-proxy:
       loadBalancer:
