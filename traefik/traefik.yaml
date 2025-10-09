@@ -19,8 +19,7 @@ entryPoints:
     address: :443
 
 serversTransport:
-  insecureSkipVerify: true # разрешить самоподписанные сертификаты
-
+  insecureSkipVerify: true # разрешить s
 providers:
   file:
     filename: config.yaml

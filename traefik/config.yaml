@@ -5,9 +5,7 @@ http:
         - websecure
       rule: Host(`traefik.dsaime.ru`)
       middlewares:
-        - base-https-redirect
         - traefik-auth
-        - sslheader
       tls:
         certResolver: cloudflare
       service: api@internal
@@ -64,10 +62,14 @@ http:
 
     fallback:
       entryPoints:
+        - web
         - websecure
       rule: HostRegexp(`.*`)
       tls:
         certResolver: cloudflare
+      middlewares:
+        - base-https-redirect
+        - sslheader
       service: caddy-proxy
       priority: 0 # Самый низкий приоритет
 
