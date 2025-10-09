@@ -5,7 +5,9 @@ http:
         - websecure
       rule: Host(`traefik.dsaime.ru`)
       middlewares:
+        - base-https-redirect
         - traefik-auth
+        - sslheader
       tls:
         certResolver: cloudflare
       service: api@internal
@@ -114,3 +116,12 @@ http:
     loki-auth:
       basicAuth:
         usersFile: /auth/loki
+
+    sslheader:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    base-https-redirect:
+      redirectScheme:
+        scheme: https
