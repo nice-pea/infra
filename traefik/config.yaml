@@ -65,8 +65,12 @@ http:
         - web
         - websecure
       rule: HostRegexp(`.*`)
-      tls:
-        certResolver: cloudflare
+    tls:
+      certResolver: cloudflare
+      domains:
+        - main: dsaime.ru
+          sans:
+            - "*.dsaime.ru"
       middlewares:
         - base-https-redirect
         - sslheader
