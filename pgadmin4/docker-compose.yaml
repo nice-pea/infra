@@ -7,7 +7,7 @@ services:
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:9.6
-    restart: on-failure:5
+    restart: unless-stopped
     networks:
       - proxy
     env_file:

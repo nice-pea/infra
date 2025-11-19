@@ -11,7 +11,7 @@ services:
     image: grafana/grafana:11.6.0
     env_file:
       - .env
-    restart: on-failure:5
+    restart: unless-stopped
     networks:
       - proxy
     volumes:

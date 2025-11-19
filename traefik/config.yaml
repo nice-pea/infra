@@ -60,17 +60,23 @@ http:
         certResolver: cloudflare
       service: infrabot
 
+    yon-api:
+      entryPoints:
+        - websecure
+      rule: Host(`api.yon.dsaime.ru`)
+      middlewares:
+        - sslheader
+      tls:
+        certResolver: cloudflare
+      service: yon-api
+
     fallback:
       entryPoints:
         - web
         - websecure
       rule: HostRegexp(`.*`)
-    tls:
-      certResolver: cloudflare
-      domains:
-        - main: dsaime.ru
-          sans:
-            - "*.dsaime.ru"
+      tls:
+        certResolver: cloudflare
       middlewares:
         - base-https-redirect
         - sslheader
@@ -102,6 +108,11 @@ http:
       loadBalancer:
         servers:
           - url: http://npc.npchat:8080
+
+    yon-api:
+      loadBalancer:
+        servers:
+          - url: http://yon.api:8080
 
     infrabot:
       loadBalancer:

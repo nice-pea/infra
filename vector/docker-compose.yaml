@@ -8,6 +8,7 @@ services:
   vector:
     image: timberio/vector:0.50.0-alpine
     container_name: npc.vector
+    restart: unless-stopped
     volumes:
       - ./vector.yaml:/etc/vector/vector.yaml:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
